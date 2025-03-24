@@ -1,0 +1,133 @@
+:root {
+    --heroHeight: 100vh; /* Chiều cao hero */
+}
+
+.heroEffects {
+    height: var(--heroHeight);
+    position: relative;
+    z-index: -1;
+    top: 0;
+    left: 0;
+}
+
+.heroEffects .bg {
+    height: var(--heroHeight);
+    position: fixed;
+    width: 100%;
+    background-image: url('../img/hero.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    transform: scale(1); 
+}
+
+.heroEffects .shade {
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 3;
+    height: var(--heroHeight);
+    position: fixed;
+    width: 100%;
+}
+
+.heroEffects .title {
+    width: 100%;
+}
+
+.heroEffects .text {
+    z-index: 1;
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 4em;
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.heroEffects .arrow {
+    position: fixed;
+    left: 50%;
+    margin-left: -20px;
+    bottom: 0;
+    width: 40px;
+    height: 40px;
+    opacity: 1;
+}
+
+.centerV {
+    display: table;
+    height: 100%;
+    
+    > div {
+        display: table-cell;
+        vertical-align: middle;
+    }
+}
+
+/* Chỉnh sửa riêng cho phần h1 và p trong banner */
+.heroEffects .banner-title {
+    font-size: 10em;
+    margin-bottom: 0.1em;
+    color: #fff;
+    font: 5em/1em;
+}
+
+.heroEffects .banner-subtitle {
+    width: 60vw;
+    font-size: 2em;
+    margin: 0 auto;
+    line-height: 4.5em;
+    padding: 10px 20px 0;
+    border-top: solid 1px rgba(255, 255, 255, 0.2);
+    letter-spacing: 0.015em;
+    display: block;
+    color: #eee;
+}
+
+.bouncy {
+    animation: bounceEffect 3s infinite cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounceEffect {
+    0% {
+        transform: translate(0, 0px);
+        animation-timing-function: cubic-bezier(0.19, 0.28, 0.27, 1);
+    }
+    11% {
+        transform: translate(0, -25px) scaleX(0.8);
+        animation-timing-function: cubic-bezier(0.57, 0.01, 0.84, 0.5);
+    }
+    20% {
+        transform: translate(0, 0px) scaleY(0.8);
+        animation-timing-function: cubic-bezier(0.19, 0.28, 0.27, 1);
+    }
+    28% {
+        transform: translate(0, -10px);
+        animation-timing-function: cubic-bezier(0.57, 0.01, 0.84, 0.5);
+    }
+    36% {
+        transform: translate(0, 0px);
+        animation-timing-function: cubic-bezier(0.19, 0.28, 0.27, 1);
+    }
+    100% {
+        transform: translate(0, 0px);
+        animation-timing-function: cubic-bezier(0.19, 0.28, 0.27, 1);
+    }
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: 'Julius Sans One', sans-serif;
+    font-size: 12px;
+}
+
+/* content */
+.carousel-item img {
+    height: 400px;
+}

@@ -1,0 +1,195 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pet Shop - Modern Navbar</title>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* Custom CSS cho Navbar */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .modern-navbar {
+      background: linear-gradient(90deg, #4a90e2, #50e3c2); /* Gradient hiện đại */
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .navbar-brand img {
+      height: 40px;
+      transition: transform 0.3s ease;
+    }
+
+    .navbar-brand img:hover {
+      transform: scale(1.1);
+    }
+
+    .navbar-nav .nav-link {
+      color: #fff;
+      font-weight: 400;
+      padding: 0.5rem 1rem;
+      transition: color 0.3s ease, background 0.3s ease;
+      border-radius: 5px;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: #4a90e2;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .dropdown-menu {
+      background: #fff;
+      border: none;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .dropdown-item {
+      font-size: 0.9rem;
+      color: #333;
+      transition: background 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+      background: #f1f1f1;
+    }
+
+    /* Thanh tìm kiếm tích hợp */
+    .search-form {
+      max-width: 300px;
+      margin-left: auto;
+    }
+
+    .search-form .form-control {
+      border-radius: 20px 0 0 20px;
+      border: none;
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+
+    .search-form .btn {
+      border-radius: 0 20px 20px 0;
+      background: #fff;
+      color: #4a90e2;
+      border: none;
+    }
+
+    /* Responsive */
+    @media (max-width: 991px) {
+      .search-form {
+        margin: 1rem auto;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Modern Horizontal Navbar -->
+  <nav class="navbar navbar-expand-lg modern-navbar">
+    <div class="container-fluid">
+      <!-- Logo -->
+      <a class="navbar-brand" href="{% url 'home' %}">
+        <img src="{% static 'images/logo.jpg' %}" alt="Pet Shop Logo">
+      </a>
+
+      <!-- Toggler cho mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" 
+              aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Menu chính và tìm kiếm -->
+      <div class="collapse navbar-collapse" id="navbarContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home' %}">Trang chủ</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'product' %}">Sản phẩm</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" 
+               aria-expanded="false">
+              Loại
+            </a>
+            <ul class="dropdown-menu">
+              {% for loai in loaisanpham %}
+                <li><a class="dropdown-item" href="{% url 'DSSPTheoLoai' loai.MaLoai %}">{{ loai.TenLoai }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cart' %}">Giỏ hàng</a>
+          </li>
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'hoa_don' %}">Hóa đơn</a>
+            </li>
+            {% if user.nguoidung.VaiTro == '1' %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'dashboard' %}">Dashboard</a>
+              </li>
+            {% endif %}
+          {% endif %}
+        </ul>
+
+        <!-- Thanh tìm kiếm -->
+        <form class="search-form d-flex" action="{% url 'product' %}" method="GET">
+          <input class="form-control me-2" type="search" name="q" placeholder="Tìm kiếm sản phẩm" aria-label="Search">
+          <button class="btn" type="submit"><i class="fas fa-search"></i></button>
+        </form>
+
+        <!-- User Authentication -->
+        <ul class="navbar-nav ms-3">
+          {% if user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" 
+               aria-expanded="false">
+              {{ user.email|default:user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li>
+                <form action="{% url 'logout' %}" method="POST" class="p-2">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger w-100">Đăng xuất</button>
+                </form>
+              </li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signin' %}">Đăng nhập</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'signup' %}">Đăng ký</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Nội dung chính (dưới navbar) -->
+  <div class="container mt-5 pt-5">
+    {% block content %}
+      <p>Đây là nội dung chính của trang.</p>
+    {% endblock %}
+  </div>
+
+  <!-- Bootstrap 5 JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
