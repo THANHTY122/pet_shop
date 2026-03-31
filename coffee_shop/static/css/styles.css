@@ -1,0 +1,26 @@
+body {
+    background: #f8f5f0;
+}
+
+.hero {
+    background: linear-gradient(120deg, #3e2723, #795548);
+}
+
+.product-image {
+    height: 220px;
+    object-fit: cover;
+}
+
+.placeholder-img,
+.placeholder-img-lg {
+    background: #ececec;
+    color: #888;
+}
+
+.placeholder-img {
+    height: 220px;
+}
+
+.placeholder-img-lg {
+    height: 360px;
+}
