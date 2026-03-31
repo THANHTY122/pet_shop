@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Thanh toán{% endblock %}
+{% block content %}
+<h2>Thông tin thanh toán</h2>
+<p class="text-muted">Đây là bước thanh toán mô phỏng thành công.</p>
+<div class="row">
+    <div class="col-md-7">
+        <form method="post" class="card card-body shadow-sm">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn btn-primary">Xác nhận đặt hàng</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

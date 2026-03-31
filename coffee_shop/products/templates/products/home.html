@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Trang chủ{% endblock %}
+{% block content %}
+<section class="hero rounded-4 p-5 text-white mb-5">
+    <h1>Thế giới cà phê chất lượng cao</h1>
+    <p>Khám phá hạt rang mộc, cà phê pha sẵn và combo quà tặng.</p>
+    <a href="{% url 'products:product_list' %}" class="btn btn-warning">Mua ngay</a>
+</section>
+
+<h3 class="mb-3">Sản phẩm nổi bật</h3>
+<div class="row g-4">
+    {% for product in featured_products %}
+        <div class="col-md-3 col-sm-6">
+            <div class="card h-100 shadow-sm">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" class="card-img-top product-image" alt="{{ product.name }}">
+                {% else %}
+                    <div class="placeholder-img d-flex align-items-center justify-content-center">No image</div>
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ product.name }}</h5>
+                    <p class="text-muted">{{ product.price }} đ</p>
+                    <a href="{{ product.get_absolute_url }}" class="btn btn-outline-primary btn-sm">Xem chi tiết</a>
+                </div>
+            </div>
+        </div>
+    {% empty %}
+        <p>Chưa có sản phẩm.</p>
+    {% endfor %}
+</div>
+{% endblock %}

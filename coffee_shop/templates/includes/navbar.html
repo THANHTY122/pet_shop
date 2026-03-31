@@ -1,0 +1,31 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'products:home' %}">☕ Coffee Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link" href="{% url 'products:product_list' %}">Sản phẩm</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'orders:cart_detail' %}">Giỏ hàng ({{ cart_item_count }})</a></li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'orders:order_history' %}">Đơn hàng</a></li>
+                {% endif %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if user.is_authenticated %}
+                    <li class="nav-item"><span class="nav-link">Xin chào, {{ user.username }}</span></li>
+                    <li class="nav-item">
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-outline-light btn-sm mt-1" type="submit">Đăng xuất</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Đăng nhập</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'users:register' %}">Đăng ký</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>
